@@ -82,32 +82,36 @@ app.get('/home', (req, res) => {
 })
 
 app.post('/home', (req, res) => {
+    if (pass === 2000) {
+        const search = req.body.searchNumber
+        if (search === "") {
+            SHOP.find({}, (err, foundData) => {
+                if (err) {
+                    res.write("<h1>customer not Found ❌</h1>")
+                    res.send()
+                } else {
+                    res.render('results', {
+                        foundData: foundData, presentDate: dateIN
+                    })
+                }
+            })
+        } else {
+            SHOP.find({ phoneNumber: search }, (err, foundData) => {
+                if (err) {
+                    res.write("<h1>customer not Found ❌</h1>")
+                    res.send()
+                } else {
+                    res.render('results', {
+                        foundData: foundData, presentDate: dateIN
+                    })
+                }
+            })
 
-    const search = req.body.searchNumber
-    if (search === "") {
-        SHOP.find({}, (err, foundData) => {
-            if (err) {
-                res.write("<h1>customer not Found ❌</h1>")
-                res.send()
-            } else {
-                res.render('results', {
-                    foundData: foundData, presentDate: dateIN
-                })
-            }
-        })
+        }
     } else {
-        SHOP.find({ phoneNumber: search }, (err, foundData) => {
-            if (err) {
-                res.write("<h1>customer not Found ❌</h1>")
-                res.send()
-            } else {
-                res.render('results', {
-                    foundData: foundData, presentDate: dateIN
-                })
-            }
-        })
-
+        res.redirect("/")
     }
+
 })
 
 app.post("/logout", (req, res) => {
@@ -119,50 +123,61 @@ app.get("/addNew", (req, res) => {
     if (pass === 2000) {
         res.render("addNew", { date: date })
     } else {
-        res.send("<h1>PLEASE LOGIN </H1>")
+        res.write("<h1>PLEASE LOGIN </h1>")
+        res.send()
     }
 
 })
 
 app.post("/addNew", (req, res) => {
-    const place = req.body.place
-    const name = req.body.name
-    const fatherName = req.body.fatherName
-    const phoneNumber = req.body.phoneNumber
-    const amount = req.body.amount
-    const takenDate = formatDate(req.body.date)
-    const itemName = req.body.itemName
-    const rateOfIntrest = req.body.rateOfIntrest
-    // const image = (__dirname + req.body.image) //// image
+    if (pass === 2000) {
+        const place = req.body.place
+        const name = req.body.name
+        const fatherName = req.body.fatherName
+        const phoneNumber = req.body.phoneNumber
+        const amount = req.body.amount
+        const takenDate = formatDate(req.body.date)
+        const itemName = req.body.itemName
+        const rateOfIntrest = req.body.rateOfIntrest
+        // const image = (__dirname + req.body.image) //// image
 
 
-    const customer = new SHOP({
-        phoneNumber: phoneNumber,
-        details: {
-            place: place,
-            name: name,
-            father: fatherName,
-            amount: amount,
-            date: takenDate,
-            itemName: itemName,
-            rateOfIntrest: rateOfIntrest
-            // img: image    //// for Image
-        }
-    })
-    customer.save((err) => {
+        const customer = new SHOP({
+            phoneNumber: phoneNumber,
+            details: {
+                place: place,
+                name: name,
+                father: fatherName,
+                amount: amount,
+                date: takenDate,
+                itemName: itemName,
+                rateOfIntrest: rateOfIntrest
+                // img: image    //// for Image
+            }
+        })
+        customer.save((err) => {
 
-    })
-    res.redirect("/home")
+        })
+        res.redirect("/home")
+    } else {
+        res.redirect("/")
+    }
+
 })
 
 app.post("/results", (req, res) => {
-    const id = req.body._id
-    SHOP.deleteOne({ _id: id }, (err) => {
-        if (err) {
-            console.error(err)
-        }
-    })
-    res.redirect("/home")
+    if (pass === 2000) {
+        const id = req.body._id
+        SHOP.deleteOne({ _id: id }, (err) => {
+            if (err) {
+                console.error(err)
+            }
+        })
+        res.redirect("/home")
+    } else {
+        res.redirect("/")
+    }
+
 })
 
 app.listen(port, () => {
