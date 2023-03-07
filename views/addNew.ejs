@@ -1,0 +1,52 @@
+<%- include('partials/header') -%>
+
+    <h1 style="text-align: center;font-size: 1.5rem;margin: 15px;">
+        <%= date %>
+    </h1>
+    <form method="post" action="/addNew" style="text-align: center;font-size: 1.5rem;">
+        <div class="mb-3">
+            <label for="place" class="form-label">Place</label>
+            <input name="place" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input name="name" type="text" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="fatherName" class="form-label">Father Name</label>
+            <input name="fatherName" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone-Number</label>
+            <input name="phoneNumber" type="number" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount :</label>
+            <input name="amount" type="number" class=" amount" required>
+            <!--form-control-->
+        </div>
+        <div class="mb-3">
+            <label for="number" class="form-label">Rate of Intrest :</label>
+            <input name="rateOfIntrest" type="number" step=".01" class=" amount" required>
+            <!--form-control-->
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input name="date" type="date" class="form-control" data-date-format="DD MMMM YYYY" placeholder="dd-mm-yyyy"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="ItemName" class="form-label">Item Name</label>
+            <input name="itemName" type="text" class="form-control" required>
+        </div>
+        <!-- <div class="mb-3">
+            <label for="image" class="form-label">image</label>
+            <input name="image" type="file" accept="image/*" capture="user" class="form-control">
+        </div> -->
+
+        <button type="post" class="btn btn-lg btn-primary" style="margin:20px;">ADD NEW</button>
+    </form>
+
+
+    <%- include('partials/footer') -%>

@@ -1,0 +1,112 @@
+<%- include('partials/header') -%>
+
+    <h1 style="text-align: center;font-size: 2.5rem;margin: 20px;">
+        Details
+    </h1>
+    <hr>
+    <% foundData.forEach(element=> { %>
+
+        <div style="margin:20px;">
+            <p>
+                Phone-Number: <strong>
+                    <%= element.phoneNumber%>
+                </strong>
+            </p>
+            <p>
+                Place: <strong>
+                    <%= element.details.place%>
+                </strong>
+            </p>
+            <p>
+                Name: <strong>
+                    <%= element.details.name%>
+                </strong>
+            </p>
+            <p>
+                Father Name: <strong>
+                    <%= element.details.father%>
+                </strong>
+            </p>
+            <p>
+                Item: <strong>
+                    <%= element.details.itemName%>
+                </strong>
+            </p>
+            <p>
+                Taken-Date: <strong>
+                    <%= element.details.date%>
+                </strong>
+            </p>
+            <p>
+                Present-Date: <strong>
+                    <%=presentDate%>
+                </strong>
+            </p>
+
+            <%let today=presentDate%>
+                <% let rateOfIntrest=element.details.rateOfIntrest %>
+                    <% let intrestForMonths=0 %>
+                        <% let amountForIntrest=element.details.amount %>
+                            <%today=new Date(today.split('/')[2], today.split('/')[1] - 1, today.split('/')[0]);%>
+                                <%let date2=element.details.date%>
+                                    <%date2=new Date(date2.split('/')[2], date2.split('/')[1] - 1,
+                                        date2.split('/')[0]);%>
+                                        <%let timeDiff=Math.abs(date2.getTime() - today.getTime());%>
+                                            <%let diffDays=Math.ceil(timeDiff / (1000 * 3600 * 24));%>
+                                                <% diffDays +=1 %>
+                                                    <% console.log(diffDays); %>
+                                                        <% let months=Math.floor(diffDays/30) %>
+                                                            <% let remaningDays=diffDays - (months*30)+1 %>
+                                                                <% let
+                                                                    intrestPerMonth=amountForIntrest*(rateOfIntrest/100)
+                                                                    %>
+                                                                    <% let intrestPerDay=(intrestPerMonth/30) %>
+                                                                        <% let totalIntrest=(intrestPerDay*diffDays) %>
+                                                                            <p style="color:red;">
+                                                                                <strong>Due-Time:
+                                                                                    <%= months%>
+                                                                                        months -
+                                                                                        <%=remaningDays %>
+                                                                                            days
+                                                                                </strong>
+                                                                            </p>
+                                                                            <p>
+                                                                                Taken-Amount: <strong>
+                                                                                    <%= element.details.amount%>
+                                                                                        Rupees
+                                                                                </strong>
+                                                                            </p>
+                                                                            <p>Rate of Intrest: <strong>
+                                                                                    <%=element.details.rateOfIntrest%>
+                                                                                </strong></p>
+                                                                            <p>Intrest: <strong>
+                                                                                    <%= totalIntrest %>
+                                                                                        rupees
+                                                                                </strong>
+                                                                            </p>
+                                                                            <p>
+                                                                                TOTAL-AMOUNT:
+                                                                                <strong style="color: green;">
+                                                                                    <%= amountForIntrest+totalIntrest %>
+                                                                                        Rupees
+                                                                                </strong>
+                                                                            </p>
+                                                                            <form method="post" action="/results">
+                                                                                <input type="hidden" name="_id"
+                                                                                    value="<%= element._id%>">
+                                                                                <button
+                                                                                    class="btn btn-g btn-danger">Delete</button>
+                                                                            </form>
+
+                                                                            <hr>
+
+        </div>
+
+        <% }) %>
+
+
+            <div style="border:solid;text-align: center;background-color: green;height: 50px;">
+                <a style="text-decoration: none;color: aliceblue;text-align: center;margin: auto;" href="/home">Back</a>
+            </div>
+
+            <%- include('partials/footer') -%>
